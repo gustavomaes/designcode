@@ -32,5 +32,6 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'no-return-assign': 'off',
     'react/jsx-one-expression-per-line': 'off',
+    'global-require': 'off',
   },
 };
