@@ -1,60 +1,51 @@
+/* eslint-disable global-require */
 import React, { useEffect } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import styled from 'styled-components';
 import SplashScreen from 'react-native-splash-screen';
+import Card from './components/Card';
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  background-color: #f0f3f5;
+`;
+
+const TitleBar = styled.View`
+  width: 100%;
+  margin-top: 50px;
+  padding-left: 80px;
+`;
+
+const Avatar = styled.Image`
+  width: 44px;
+  height: 44px;
+  background-color: black;
+  border-radius: 22px;
+  margin-left: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const Title = styled.Text`
+  font-size: 16px;
+  color: #b8bece;
+  font-weight: 500;
+`;
+
+const Name = styled.Text`
+  font-size: 20px;
+  color: #3c4560;
+  font-weight: bold;
+`;
+
+const Subtitle = styled.Text`
+  font-size: 15px;
+  color: #b8bece;
+  font-weight: 600;
+  margin-left: 20px;
+  margin-top: 50px;
+  text-transform: uppercase;
+`;
 
 const App = () => {
   useEffect(() => {
@@ -62,50 +53,15 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}
-        >
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <Container>
+      <TitleBar>
+        <Avatar source={require('../assets/avatar.jpg')} />
+        <Title>Welcome back</Title>
+        <Name>Gustavo</Name>
+      </TitleBar>
+      <Subtitle>Continue Learning</Subtitle>
+      <Card />
+    </Container>
   );
 };
 
