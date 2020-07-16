@@ -60,7 +60,13 @@ const App = () => {
         <Name>Gustavo</Name>
       </TitleBar>
       <Subtitle>Continue Learning</Subtitle>
-      <Card />
+      <Card
+        title="Styled Components"
+        image={require('../assets/background2.jpg')}
+        logo={require('../assets/logo-react.png')}
+        caption="React Native"
+        subtitle="5 of 12 sections"
+      />
     </Container>
   );
 };
