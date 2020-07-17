@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import SplashScreen from 'react-native-splash-screen';
 import Card from './components/Card';
 import { NotificationIcon } from './components/Icons';
+import Logo from './components/Logo';
 
 const Container = styled.View`
   flex: 1;
@@ -44,7 +45,7 @@ const Subtitle = styled.Text`
   color: #b8bece;
   font-weight: 600;
   margin-left: 20px;
-  margin-top: 50px;
+  margin-top: 20px;
   text-transform: uppercase;
 `;
 
@@ -62,9 +63,32 @@ const App = () => {
             <Title>Welcome back</Title>
             <Name>Gustavo</Name>
             <NotificationIcon
-              style={{ position: 'absolute', top: 5, right: 20 }}
+              style={{
+                position: 'absolute',
+                top: 5,
+                right: 20,
+                paddingTop: 30,
+              }}
             />
           </TitleBar>
+          <ScrollView
+            horizontal
+            style={{ padding: 20, paddingLeft: 12 }}
+            showsHorizontalScrollIndicator={false}
+          >
+            <Logo
+              image={require('../assets/logo-framerx.png')}
+              text="Framer X"
+            />
+            <Logo
+              image={require('../assets/logo-framerx.png')}
+              text="Framer X"
+            />
+            <Logo
+              image={require('../assets/logo-framerx.png')}
+              text="Framer X"
+            />
+          </ScrollView>
           <Subtitle>Continue Learning</Subtitle>
           <ScrollView
             horizontal
