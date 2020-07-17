@@ -1,8 +1,8 @@
-/* eslint-disable global-require */
 import React, { useEffect } from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import styled from 'styled-components';
 import SplashScreen from 'react-native-splash-screen';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Card from './components/Card';
 
 const Container = styled.View`
@@ -39,6 +39,16 @@ const Name = styled.Text`
   font-weight: bold;
 `;
 
+const NotificationIcon = styled(Ionicons).attrs({
+  name: 'ios-notifications',
+  color: '#4775f2',
+  size: 32,
+})`
+  position: absolute;
+  right: 20;
+  top: 5;
+`;
+
 const Subtitle = styled.Text`
   font-size: 15px;
   color: #b8bece;
@@ -61,6 +71,7 @@ const App = () => {
             <Avatar source={require('../assets/avatar.jpg')} />
             <Title>Welcome back</Title>
             <Name>Gustavo</Name>
+            <NotificationIcon />
           </TitleBar>
           <Subtitle>Continue Learning</Subtitle>
           <ScrollView
