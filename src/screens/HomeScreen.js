@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import SplashScreen from 'react-native-splash-screen';
 import Card from '../components/Card';
@@ -7,6 +7,7 @@ import { NotificationIcon } from '../components/Icons';
 import Logo from '../components/Logo';
 import Course from '../components/Course';
 import Menu from '../components/Menu';
+import StoreContext from '../contexts/StoreContext';
 
 const Container = styled.View`
   flex: 1;
@@ -25,9 +26,6 @@ const Avatar = styled.Image`
   background-color: black;
   border-radius: 22px;
   margin-left: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
 `;
 
 const Title = styled.Text`
@@ -149,6 +147,8 @@ const courses = [
   },
 ];
 const App = () => {
+  const { action, setAction } = useContext(StoreContext);
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -159,7 +159,9 @@ const App = () => {
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView>
           <TitleBar>
-            <Avatar source={require('../../assets/avatar.jpg')} />
+            <TouchableOpacity onPress={() => setAction('openMenu')}>
+              <Avatar source={require('../../assets/avatar.jpg')} />
+            </TouchableOpacity>
             <Title>Welcome back</Title>
             <Name>Gustavo</Name>
             <NotificationIcon
