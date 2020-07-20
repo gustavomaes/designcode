@@ -13,6 +13,8 @@ const Container = styled.View`
   width: 100%;
   height: 100%;
   z-index: 100;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const AnimatedContaine = Animated.createAnimatedComponent(Container);
@@ -87,7 +89,7 @@ const Menu = () => {
   const toggleMenu = () => {
     if (action === 'openMenu') {
       Animated.spring(top, {
-        toValue: 0,
+        toValue: 54,
       }).start();
     }
     if (action === 'closeMenu') {
