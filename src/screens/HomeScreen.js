@@ -1,5 +1,12 @@
-import React, { useEffect, useContext } from 'react';
-import { ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useContext, useState } from 'react';
+import {
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+  Animated,
+  Easing,
+  StatusBar,
+} from 'react-native';
 import styled from 'styled-components';
 import SplashScreen from 'react-native-splash-screen';
 import Card from '../components/Card';
@@ -9,10 +16,18 @@ import Course from '../components/Course';
 import Menu from '../components/Menu';
 import StoreContext from '../contexts/StoreContext';
 
+const RootView = styled.View`
+  flex: 1;
+  background-color: black;
+`;
+
 const Container = styled.View`
   flex: 1;
   background-color: #f0f3f5;
+  border-radius: 10px;
 `;
+
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const TitleBar = styled.View`
   width: 100%;
@@ -25,7 +40,6 @@ const Avatar = styled.Image`
   height: 44px;
   background-color: black;
   border-radius: 22px;
-  margin-left: 20px;
 `;
 
 const Title = styled.Text`
@@ -147,73 +161,120 @@ const courses = [
   },
 ];
 const App = () => {
+  const [scale] = useState(new Animated.Value(1));
+  const [opacity] = useState(new Animated.Value(1));
   const { action, setAction } = useContext(StoreContext);
+
+  const toggleMenu = () => {
+    if (action === 'openMenu') {
+      Animated.timing(scale, {
+        toValue: 0.9,
+        duration: 300,
+        easing: Easing.in(),
+      }).start();
+      Animated.spring(opacity, {
+        toValue: 0.5,
+      }).start();
+      StatusBar.setBarStyle('light-content', true);
+    }
+
+    if (action === 'closeMenu') {
+      Animated.timing(scale, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.in(),
+      }).start();
+      Animated.spring(opacity, {
+        toValue: 1,
+      }).start();
+      StatusBar.setBarStyle('dark-content', true);
+    }
+  };
 
   useEffect(() => {
     SplashScreen.hide();
+    StatusBar.setBarStyle('dark-content', true);
   }, []);
 
+  useEffect(() => {
+    toggleMenu();
+  }, [action]);
+
   return (
-    <Container>
+    <RootView>
       <Menu />
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView>
-          <TitleBar>
-            <TouchableOpacity onPress={() => setAction('openMenu')}>
-              <Avatar source={require('../../assets/avatar.jpg')} />
-            </TouchableOpacity>
-            <Title>Welcome back</Title>
-            <Name>Gustavo</Name>
-            <NotificationIcon
-              style={{
-                position: 'absolute',
-                top: 5,
-                right: 20,
-                paddingTop: 30,
-              }}
-            />
-          </TitleBar>
-          <ScrollView
-            horizontal
-            style={{ padding: 20, paddingLeft: 12 }}
-            showsHorizontalScrollIndicator={false}
-          >
-            {logos.map(({ image, text }) => (
-              <Logo image={image} text={text} key={text} />
-            ))}
-          </ScrollView>
-          <Subtitle>Continue Learning</Subtitle>
-          <ScrollView
-            horizontal
-            style={{ paddingBottom: 30 }}
-            showsHorizontalScrollIndicator={false}
-          >
-            {cards.map((card) => (
-              <Card
-                key={card.title}
-                title={card.title}
-                image={card.image}
-                logo={card.logo}
-                caption={card.caption}
-                subtitle={card.subtitle}
+      <AnimatedContainer
+        style={{
+          transform: [{ scale }],
+          opacity,
+        }}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView>
+            <TitleBar>
+              <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 20,
+                }}
+                onPress={() => setAction('openMenu')}
+              >
+                <Avatar source={require('../../assets/avatar.jpg')} />
+              </TouchableOpacity>
+              <Title>Welcome back</Title>
+              <Name>Gustavo</Name>
+              <NotificationIcon
+                style={{
+                  position: 'absolute',
+                  top: 5,
+                  right: 20,
+                  paddingTop: 30,
+                }}
+              />
+            </TitleBar>
+            <ScrollView
+              horizontal
+              style={{ padding: 20, paddingLeft: 12 }}
+              showsHorizontalScrollIndicator={false}
+            >
+              {logos.map(({ image, text }) => (
+                <Logo image={image} text={text} key={text} />
+              ))}
+            </ScrollView>
+            <Subtitle>Continue Learning</Subtitle>
+            <ScrollView
+              horizontal
+              style={{ paddingBottom: 30 }}
+              showsHorizontalScrollIndicator={false}
+            >
+              {cards.map((card) => (
+                <Card
+                  key={card.title}
+                  title={card.title}
+                  image={card.image}
+                  logo={card.logo}
+                  caption={card.caption}
+                  subtitle={card.subtitle}
+                />
+              ))}
+            </ScrollView>
+            <Subtitle>Popular coursers</Subtitle>
+            {courses.map((course) => (
+              <Course
+                image={course.image}
+                logo={course.logo}
+                subtitle={course.subtitle}
+                title={course.title}
+                avatar={course.avatar}
+                caption={course.caption}
+                author={course.author}
               />
             ))}
           </ScrollView>
-          <Subtitle>Popular coursers</Subtitle>
-          {courses.map((course) => (
-            <Course
-              image={course.image}
-              logo={course.logo}
-              subtitle={course.subtitle}
-              title={course.title}
-              avatar={course.avatar}
-              caption={course.caption}
-              author={course.author}
-            />
-          ))}
-        </ScrollView>
-      </SafeAreaView>
-    </Container>
+        </SafeAreaView>
+      </AnimatedContainer>
+    </RootView>
   );
 };
 
