@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Animated, TouchableOpacity, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MenuItem from './MenuItem';
+import StoreContext from '../contexts/StoreContext';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -80,19 +81,25 @@ const items = [
   },
 ];
 const Menu = () => {
-  const [top, setTop] = useState(new Animated.Value(screenHeight));
-
-  useEffect(() => {
-    Animated.spring(top, {
-      toValue: 0,
-    }).start();
-  }, []);
+  const [top] = useState(new Animated.Value(screenHeight));
+  const { action } = useContext(StoreContext);
 
   const toggleMenu = () => {
-    Animated.spring(top, {
-      toValue: screenHeight,
-    }).start();
+    if (action === 'openMenu') {
+      Animated.spring(top, {
+        toValue: 0,
+      }).start();
+    }
+    if (action === 'closeMenu') {
+      Animated.spring(top, {
+        toValue: screenHeight,
+      }).start();
+    }
   };
+
+  useEffect(() => {
+    toggleMenu();
+  }, []);
 
   return (
     <AnimatedContaine style={{ top }}>
