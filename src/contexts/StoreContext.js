@@ -3,10 +3,10 @@ import React, { createContext, useState } from 'react';
 const StoreContext = createContext({ signed: true });
 
 export const StoreProvider = ({ children }) => {
-  const [openMenu, setOpenMenu] = useState();
+  const [action, setAction] = useState('openMenu');
 
   return (
-    <StoreContext.Provider value={{ openMenu, setOpenMenu }}>
+    <StoreContext.Provider value={{ action, setAction }}>
       {children}
     </StoreContext.Provider>
   );
