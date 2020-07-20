@@ -82,7 +82,7 @@ const items = [
 ];
 const Menu = () => {
   const [top] = useState(new Animated.Value(screenHeight));
-  const { action } = useContext(StoreContext);
+  const { action, setAction } = useContext(StoreContext);
 
   const toggleMenu = () => {
     if (action === 'openMenu') {
@@ -101,6 +101,10 @@ const Menu = () => {
     toggleMenu();
   }, []);
 
+  useEffect(() => {
+    toggleMenu();
+  }, [action]);
+
   return (
     <AnimatedContaine style={{ top }}>
       <Cover>
@@ -109,7 +113,7 @@ const Menu = () => {
         <Subtitle>Designer at Design+Code </Subtitle>
       </Cover>
       <TouchableOpacity
-        onPress={() => toggleMenu()}
+        onPress={() => setAction('closeMenu')}
         style={{
           position: 'absolute',
           top: 120,
