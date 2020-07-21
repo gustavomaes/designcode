@@ -4,9 +4,10 @@ const StoreContext = createContext({ signed: true });
 
 export const StoreProvider = ({ children }) => {
   const [action, setAction] = useState();
+  const [name, setName] = useState();
 
   return (
-    <StoreContext.Provider value={{ action, setAction }}>
+    <StoreContext.Provider value={{ action, setAction, name, setName }}>
       {children}
     </StoreContext.Provider>
   );
