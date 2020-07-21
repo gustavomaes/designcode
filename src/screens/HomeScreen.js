@@ -15,6 +15,7 @@ import Logo from '../components/Logo';
 import Course from '../components/Course';
 import Menu from '../components/Menu';
 import StoreContext from '../contexts/StoreContext';
+import Avatar from '../components/Avatar';
 
 const RootView = styled.View`
   flex: 1;
@@ -33,13 +34,6 @@ const TitleBar = styled.View`
   width: 100%;
   margin-top: 50px;
   padding-left: 80px;
-`;
-
-const Avatar = styled.Image`
-  width: 44px;
-  height: 44px;
-  background-color: black;
-  border-radius: 22px;
 `;
 
 const Title = styled.Text`
@@ -163,7 +157,7 @@ const courses = [
 const App = () => {
   const [scale] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
-  const { action, setAction } = useContext(StoreContext);
+  const { action, setAction, name } = useContext(StoreContext);
 
   const toggleMenu = () => {
     if (action === 'openMenu') {
@@ -220,10 +214,10 @@ const App = () => {
                 }}
                 onPress={() => setAction('openMenu')}
               >
-                <Avatar source={require('../../assets/avatar.jpg')} />
+                <Avatar />
               </TouchableOpacity>
               <Title>Welcome back</Title>
-              <Name>Gustavo</Name>
+              <Name>{name}</Name>
               <NotificationIcon
                 style={{
                   position: 'absolute',
