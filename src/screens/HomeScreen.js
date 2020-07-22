@@ -25,7 +25,8 @@ const RootView = styled.View`
 const Container = styled.View`
   flex: 1;
   background-color: #f0f3f5;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
@@ -154,7 +155,7 @@ const courses = [
       'Complete guide to designing a site using a collaborative design tool',
   },
 ];
-const App = () => {
+const HomeScreen = ({ navigation }) => {
   const [scale] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
   const { action, setAction, name } = useContext(StoreContext);
@@ -243,14 +244,18 @@ const App = () => {
               showsHorizontalScrollIndicator={false}
             >
               {cards.map((card) => (
-                <Card
+                <TouchableOpacity
+                  onPress={() => navigation.push('SECTIONS')}
                   key={card.title}
-                  title={card.title}
-                  image={card.image}
-                  logo={card.logo}
-                  caption={card.caption}
-                  subtitle={card.subtitle}
-                />
+                >
+                  <Card
+                    title={card.title}
+                    image={card.image}
+                    logo={card.logo}
+                    caption={card.caption}
+                    subtitle={card.subtitle}
+                  />
+                </TouchableOpacity>
               ))}
             </ScrollView>
             <Subtitle>Popular coursers</Subtitle>
@@ -272,4 +277,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default HomeScreen;
