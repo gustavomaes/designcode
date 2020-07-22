@@ -1,11 +1,7 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import HomeScreen from './screens/HomeScreen';
-import { StoreProvider } from './contexts/StoreContext';
+import Navigation from './navigator/Navigation';
 
-const App = () => (
-  <StoreProvider>
-    <HomeScreen />
-  </StoreProvider>
-);
+const App = () => <Navigation />;
 
 export default App;
