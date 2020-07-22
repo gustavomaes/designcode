@@ -245,7 +245,7 @@ const HomeScreen = ({ navigation }) => {
             >
               {cards.map((card) => (
                 <TouchableOpacity
-                  onPress={() => navigation.push('SECTIONS')}
+                  onPress={() => navigation.push('SECTIONS', { section: card })}
                   key={card.title}
                 >
                   <Card
