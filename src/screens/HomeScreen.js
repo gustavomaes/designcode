@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable operator-linebreak */
 import React, { useEffect, useContext, useState } from 'react';
 import {
   ScrollView,
@@ -9,6 +11,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import SplashScreen from 'react-native-splash-screen';
+import { useQuery, gql } from '@apollo/client';
 import Card from '../components/Card';
 import { NotificationIcon } from '../components/Icons';
 import Logo from '../components/Logo';
@@ -16,6 +19,39 @@ import Course from '../components/Course';
 import Menu from '../components/Menu';
 import StoreContext from '../contexts/StoreContext';
 import Avatar from '../components/Avatar';
+
+const CardsQuery = gql`
+  {
+    cardsCollection {
+      items {
+        title
+        subtitle
+        image {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        subtitle
+        caption
+        logo {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+`;
 
 const RootView = styled.View`
   flex: 1;
@@ -85,37 +121,6 @@ const logos = [
   },
 ];
 
-const cards = [
-  {
-    title: 'React Native for Designers',
-    image: require('../../assets/background11.jpg'),
-    subtitle: 'React Native',
-    caption: '1 of 12 sections',
-    logo: require('../../assets/logo-react.png'),
-  },
-  {
-    title: 'Styled Components',
-    image: require('../../assets/background12.jpg'),
-    subtitle: 'React Native',
-    caption: '2 of 12 sections',
-    logo: require('../../assets/logo-react.png'),
-  },
-  {
-    title: 'Props and Icons',
-    image: require('../../assets/background13.jpg'),
-    subtitle: 'React Native',
-    caption: '3 of 12 sections',
-    logo: require('../../assets/logo-react.png'),
-  },
-  {
-    title: 'Static Data and Loop',
-    image: require('../../assets/background14.jpg'),
-    subtitle: 'React Native',
-    caption: '4 of 12 sections',
-    logo: require('../../assets/logo-react.png'),
-  },
-];
-
 const courses = [
   {
     title: 'Prototype in InVision Studio',
@@ -159,6 +164,7 @@ const HomeScreen = ({ navigation }) => {
   const [scale] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
   const { action, setAction, name } = useContext(StoreContext);
+  const { loading, error, data } = useQuery(CardsQuery);
 
   const toggleMenu = () => {
     if (action === 'openMenu') {
@@ -194,6 +200,10 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     toggleMenu();
   }, [action]);
+
+  useEffect(() => {
+    console.log('data> ', data.cardsCollection.items);
+  }, [data]);
 
   return (
     <RootView>
@@ -243,20 +253,23 @@ const HomeScreen = ({ navigation }) => {
               style={{ paddingBottom: 30 }}
               showsHorizontalScrollIndicator={false}
             >
-              {cards.map((card) => (
-                <TouchableOpacity
-                  onPress={() => navigation.push('SECTIONS', { section: card })}
-                  key={card.title}
-                >
-                  <Card
-                    title={card.title}
-                    image={card.image}
-                    logo={card.logo}
-                    caption={card.caption}
-                    subtitle={card.subtitle}
-                  />
-                </TouchableOpacity>
-              ))}
+              {data.cardsCollection.items &&
+                data.cardsCollection.items.map((card) => (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.push('SECTIONS', { section: card })
+                    }
+                    key={card.title}
+                  >
+                    <Card
+                      title={card.title}
+                      image={card.image}
+                      logo={card.logo}
+                      caption={card.caption}
+                      subtitle={card.subtitle}
+                    />
+                  </TouchableOpacity>
+                ))}
             </ScrollView>
             <Subtitle>Popular coursers</Subtitle>
             {courses.map((course) => (
