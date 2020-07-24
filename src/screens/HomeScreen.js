@@ -201,10 +201,6 @@ const HomeScreen = ({ navigation }) => {
     toggleMenu();
   }, [action]);
 
-  useEffect(() => {
-    console.log('data> ', data.cardsCollection.items);
-  }, [data]);
-
   return (
     <RootView>
       <Menu />
@@ -253,7 +249,7 @@ const HomeScreen = ({ navigation }) => {
               style={{ paddingBottom: 30 }}
               showsHorizontalScrollIndicator={false}
             >
-              {data.cardsCollection.items &&
+              {data &&
                 data.cardsCollection.items.map((card) => (
                   <TouchableOpacity
                     onPress={() =>
