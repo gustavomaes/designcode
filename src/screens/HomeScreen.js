@@ -8,9 +8,9 @@ import {
   Animated,
   Easing,
   StatusBar,
+  Platform,
 } from 'react-native';
 import styled from 'styled-components';
-import SplashScreen from 'react-native-splash-screen';
 import { useQuery, gql } from '@apollo/client';
 import Card from '../components/Card';
 import { NotificationIcon } from '../components/Icons';
@@ -198,8 +198,11 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    SplashScreen.hide();
-    StatusBar.setBarStyle('dark-content', true);
+    if (Platform.OS === 'android') {
+      StatusBar.setBarStyle('light-content', true);
+    } else {
+      StatusBar.setBarStyle('dark-content', true);
+    }
   }, []);
 
   useEffect(() => {
