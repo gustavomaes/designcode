@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import SplashScreen from 'react-native-splash-screen';
 import Navigation from './navigator/Navigation';
 
 const client = new ApolloClient({
@@ -13,10 +14,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <Navigation />
-  </ApolloProvider>
-);
+const App = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
+  return (
+    <ApolloProvider client={client}>
+      <Navigation />
+    </ApolloProvider>
+  );
+};
 export default App;
