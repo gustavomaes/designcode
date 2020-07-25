@@ -76,7 +76,7 @@ const Card = ({ title, image, logo, caption, subtitle }) => (
       <Logo source={logo} />
       <Wrapper>
         <Caption>{caption}</Caption>
-        <Subtitle>{subtitle}</Subtitle>
+        <Subtitle>{subtitle.toUpperCase()}</Subtitle>
       </Wrapper>
     </Content>
   </Container>
