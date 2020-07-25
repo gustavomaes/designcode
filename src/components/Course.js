@@ -1,19 +1,13 @@
-import React from 'react';
+/* eslint-disable function-paren-newline */
+/* eslint-disable comma-dangle */
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components';
 
 const screenWidth = Dimensions.get('window').width;
-let cardWidth = screenWidth - 40;
-if (screenWidth >= 768) {
-  cardWidth = (screenWidth - 60) / 2;
-}
-
-if (screenWidth >= 1024) {
-  cardWidth = (screenWidth - 80) / 3;
-}
 
 const Container = styled.View`
-  width: ${cardWidth};
+  width: ${(p) => p.cardWidth};
   height: 335px;
   background: white;
   margin: 10px 10px;
@@ -90,20 +84,47 @@ const Author = styled.Text`
   margin-top: 4px;
 `;
 
-const Course = ({ image, logo, subtitle, title, avatar, caption, author }) => (
-  <Container>
-    <Cover>
-      <Image source={image} />
-      <Logo source={logo} resizeMode="contain" />
-      <Subtile>{subtitle}</Subtile>
-      <Title>{title}</Title>
-    </Cover>
-    <Content>
-      <Avatar source={avatar} />
-      <Caption>{caption}</Caption>
-      <Author>{author}</Author>
-    </Content>
-  </Container>
-);
+const Course = ({ image, logo, subtitle, title, avatar, caption, author }) => {
+  const getCardWidth = (totalWidth) => {
+    let width = totalWidth - 40;
+    if (totalWidth >= 768) {
+      width = (totalWidth - 60) / 2;
+    }
+    if (totalWidth >= 1024) {
+      width = (totalWidth - 80) / 3;
+    }
+
+    return width;
+  };
+
+  const [cardWidth, setCardWidth] = useState(getCardWidth(screenWidth));
+
+  const adaptLayout = (dimensions) => {
+    console.log('dimensions> ', dimensions);
+    setCardWidth(getCardWidth(dimensions.window.width));
+  };
+
+  useEffect(() => {
+    Dimensions.addEventListener('change', (dimensions) =>
+      adaptLayout(dimensions)
+    );
+  }, []);
+
+  return (
+    <Container cardWidth={cardWidth}>
+      <Cover>
+        <Image source={image} />
+        <Logo source={logo} resizeMode="contain" />
+        <Subtile>{subtitle}</Subtile>
+        <Title>{title}</Title>
+      </Cover>
+      <Content>
+        <Avatar source={avatar} />
+        <Caption>{caption}</Caption>
+        <Author>{author}</Author>
+      </Content>
+    </Container>
+  );
+};
 
 export default Course;
