@@ -99,6 +99,12 @@ const CardContainer = styled.View`
   padding-left: 10px;
 `;
 
+const CoursesContainer = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 10px;
+`;
+
 const logos = [
   {
     image: require('../../assets/logo-framerx.png'),
@@ -278,17 +284,19 @@ const HomeScreen = ({ navigation }) => {
                 ))}
             </ScrollView>
             <Subtitle>Popular coursers</Subtitle>
-            {courses.map((course) => (
-              <Course
-                image={course.image}
-                logo={course.logo}
-                subtitle={course.subtitle}
-                title={course.title}
-                avatar={course.avatar}
-                caption={course.caption}
-                author={course.author}
-              />
-            ))}
+            <CoursesContainer>
+              {courses.map((course) => (
+                <Course
+                  image={course.image}
+                  logo={course.logo}
+                  subtitle={course.subtitle}
+                  title={course.title}
+                  avatar={course.avatar}
+                  caption={course.caption}
+                  author={course.author}
+                />
+              ))}
+            </CoursesContainer>
           </ScrollView>
         </SafeAreaView>
       </AnimatedContainer>

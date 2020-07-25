@@ -1,11 +1,22 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components';
 
+const screenWidth = Dimensions.get('window').width;
+let cardWidth = screenWidth - 40;
+if (screenWidth >= 768) {
+  cardWidth = (screenWidth - 60) / 2;
+}
+
+if (screenWidth >= 1024) {
+  cardWidth = (screenWidth - 80) / 3;
+}
+
 const Container = styled.View`
-  width: 335px;
+  width: ${cardWidth};
   height: 335px;
   background: white;
-  margin: 10px 20px;
+  margin: 10px 10px;
   border-radius: 14px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 `;
