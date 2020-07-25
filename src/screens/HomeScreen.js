@@ -94,6 +94,11 @@ const Subtitle = styled.Text`
   text-transform: uppercase;
 `;
 
+const CardContainer = styled.View`
+  flex-direction: row;
+  padding-left: 10px;
+`;
+
 const logos = [
   {
     image: require('../../assets/logo-framerx.png'),
@@ -251,20 +256,22 @@ const HomeScreen = ({ navigation }) => {
             >
               {data &&
                 data.cardsCollection.items.map((card) => (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.push('SECTIONS', { section: card })
-                    }
-                    key={card.title}
-                  >
-                    <Card
-                      title={card.title}
-                      image={card.image}
-                      logo={card.logo}
-                      caption={card.caption}
-                      subtitle={card.subtitle}
-                    />
-                  </TouchableOpacity>
+                  <CardContainer>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.push('SECTIONS', { section: card })
+                      }
+                      key={card.title}
+                    >
+                      <Card
+                        title={card.title}
+                        image={card.image}
+                        logo={card.logo}
+                        caption={card.caption}
+                        subtitle={card.subtitle}
+                      />
+                    </TouchableOpacity>
+                  </CardContainer>
                 ))}
             </ScrollView>
             <Subtitle>Popular coursers</Subtitle>
