@@ -6,11 +6,17 @@ import MenuItem from './MenuItem';
 import StoreContext from '../contexts/StoreContext';
 
 const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+let cardWidth = screenWidth;
+if (screenWidth > 500) {
+  cardWidth = 500;
+}
 
 const Container = styled.View`
+  align-self: center;
   position: absolute;
   background: white;
-  width: 100%;
+  width: ${cardWidth};
   height: 100%;
   z-index: 100;
   border-radius: 10px;
