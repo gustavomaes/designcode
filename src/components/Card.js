@@ -6,9 +6,9 @@ const Container = styled.View`
   width: 315px;
   height: 280px;
   border-radius: 14px;
-  margin-top: 20px;
-  margin-left: 20px;
+  margin: 20px 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  elevation: 10;
 `;
 
 const Cover = styled.View`
