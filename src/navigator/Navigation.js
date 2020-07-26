@@ -38,9 +38,9 @@ const TabApp = () => (
       inactiveTintColor: inactiveColor,
     }}
   >
+    <Tab.Screen name="Projects" component={ProjectsScreen} />
     <Tab.Screen name="Home" component={AppRoutes} />
     <Tab.Screen name="Courses" component={CoursesScreen} />
-    <Tab.Screen name="Projects" component={ProjectsScreen} />
   </Tab.Navigator>
 );
 
