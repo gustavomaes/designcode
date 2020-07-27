@@ -44,7 +44,7 @@ const Author = styled.Text`
 const Text = styled.Text`
   font-size: 17px;
   margin: 20px;
-  line-height: 24;
+  line-height: 24px;
   color: #3c4560;
 `;
 
