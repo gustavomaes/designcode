@@ -38,6 +38,8 @@ const ProjectsScreen = () => {
   const [pan] = useState(new Animated.ValueXY());
   const [scale] = useState(new Animated.Value(0.9));
   const [translateY] = useState(new Animated.Value(44));
+  const [thirdScale] = useState(new Animated.Value(0.8));
+  const [thirdTranslateY] = useState(new Animated.Value(-50));
 
   const panResponder = PanResponder.create({
     onPanResponderGrant: () => {
@@ -47,6 +49,16 @@ const ProjectsScreen = () => {
       }).start();
       Animated.spring(translateY, {
         toValue: 0,
+        useNativeDriver: true,
+      }).start();
+
+      // Third card
+      Animated.spring(thirdScale, {
+        toValue: 0.9,
+        useNativeDriver: true,
+      }).start();
+      Animated.spring(thirdTranslateY, {
+        toValue: 44,
         useNativeDriver: true,
       }).start();
     },
@@ -71,6 +83,15 @@ const ProjectsScreen = () => {
         }).start();
         Animated.spring(translateY, {
           toValue: 44,
+          useNativeDriver: true,
+        }).start();
+        // Third Card
+        Animated.spring(thirdScale, {
+          toValue: 0.8,
+          useNativeDriver: true,
+        }).start();
+        Animated.spring(thirdTranslateY, {
+          toValue: -50,
           useNativeDriver: true,
         }).start();
       }
@@ -110,6 +131,26 @@ const ProjectsScreen = () => {
           image={projects[1].image}
           author={projects[1].author}
           text={projects[1].text}
+        />
+      </Animated.View>
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: -2,
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          transform: [{ scale: thirdScale }, { translateY: thirdTranslateY }],
+        }}
+      >
+        <Project
+          title={projects[2].title}
+          image={projects[2].image}
+          author={projects[2].author}
+          text={projects[2].text}
         />
       </Animated.View>
     </Container>
