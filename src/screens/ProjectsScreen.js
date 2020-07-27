@@ -86,10 +86,10 @@ const ProjectsScreen = () => {
         {...panResponder.panHandlers}
       >
         <Project
-          title="Price tag"
-          image={require('../../assets/background5.jpg')}
-          author="Gustavo Maes"
-          text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+          title={projects[0].title}
+          image={projects[0].image}
+          author={projects[0].author}
+          text={projects[0].text}
         />
       </Animated.View>
       <Animated.View
@@ -106,10 +106,10 @@ const ProjectsScreen = () => {
         }}
       >
         <Project
-          title="Price tag"
-          image={require('../../assets/background6.jpg')}
-          author="Gustavo Maes"
-          text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+          title={projects[1].title}
+          image={projects[1].image}
+          author={projects[1].author}
+          text={projects[1].text}
         />
       </Animated.View>
     </Container>
