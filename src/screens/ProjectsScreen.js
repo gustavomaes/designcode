@@ -40,8 +40,19 @@ const ProjectsScreen = () => {
   const [translateY] = useState(new Animated.Value(44));
   const [thirdScale] = useState(new Animated.Value(0.8));
   const [thirdTranslateY] = useState(new Animated.Value(-50));
+  const [index, setIndex] = useState(0);
+
+  const getNextIndex = (value) => {
+    const nextIndex = value + 1;
+    if (nextIndex > projects.length - 1) {
+      return 0;
+    }
+    return nextIndex;
+  };
 
   const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+
     onPanResponderGrant: () => {
       Animated.spring(scale, {
         toValue: 1,
@@ -62,16 +73,24 @@ const ProjectsScreen = () => {
         useNativeDriver: true,
       }).start();
     },
-    onMoveShouldSetPanResponder: () => true,
+
     onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
+
     onPanResponderRelease: () => {
       const positionY = pan.y.__getValue();
 
       if (positionY > 200) {
         Animated.timing(pan, {
-          toValue: { x: pan.x, y: 1000 },
+          toValue: { x: 0, y: 1000 },
           useNativeDriver: true,
-        }).start();
+        }).start(() => {
+          pan.setValue({ x: 0, y: 0 });
+          scale.setValue(0.9);
+          translateY.setValue(44);
+          thirdScale.setValue(0.8);
+          thirdTranslateY.setValue(-50);
+          setIndex(getNextIndex(index));
+        });
       } else {
         Animated.spring(pan, {
           toValue: { x: 0, y: 0 },
@@ -107,10 +126,10 @@ const ProjectsScreen = () => {
         {...panResponder.panHandlers}
       >
         <Project
-          title={projects[0].title}
-          image={projects[0].image}
-          author={projects[0].author}
-          text={projects[0].text}
+          title={projects[index].title}
+          image={projects[index].image}
+          author={projects[index].author}
+          text={projects[index].text}
         />
       </Animated.View>
       <Animated.View
@@ -127,10 +146,10 @@ const ProjectsScreen = () => {
         }}
       >
         <Project
-          title={projects[1].title}
-          image={projects[1].image}
-          author={projects[1].author}
-          text={projects[1].text}
+          title={projects[getNextIndex(index)].title}
+          image={projects[getNextIndex(index)].image}
+          author={projects[getNextIndex(index)].author}
+          text={projects[getNextIndex(index)].text}
         />
       </Animated.View>
       <Animated.View
@@ -147,10 +166,10 @@ const ProjectsScreen = () => {
         }}
       >
         <Project
-          title={projects[2].title}
-          image={projects[2].image}
-          author={projects[2].author}
-          text={projects[2].text}
+          title={projects[getNextIndex(index + 1)].title}
+          image={projects[getNextIndex(index + 1)].image}
+          author={projects[getNextIndex(index + 1)].author}
+          text={projects[getNextIndex(index + 1)].text}
         />
       </Animated.View>
     </Container>
