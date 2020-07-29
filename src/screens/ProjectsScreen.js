@@ -1,8 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { PanResponder, Animated } from 'react-native';
 import Project from '../components/Project';
+import StoreContext from '../contexts/StoreContext';
 
 const Container = styled.View`
   flex: 1;
@@ -41,6 +42,7 @@ const ProjectsScreen = () => {
   const [thirdScale] = useState(new Animated.Value(0.8));
   const [thirdTranslateY] = useState(new Animated.Value(-50));
   const [index, setIndex] = useState(0);
+  const { cardOpen } = useContext(StoreContext);
 
   const getNextIndex = (value) => {
     const nextIndex = value + 1;
@@ -52,9 +54,8 @@ const ProjectsScreen = () => {
 
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (event, gestureState) => {
-      if (gestureState.dx === 0 && gestureState.dy === 0) {
-        return false;
-      }
+      if (gestureState.dx === 0 && gestureState.dy === 0) return false;
+      if (cardOpen) return false;
       return true;
     },
 

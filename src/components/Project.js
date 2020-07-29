@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Animated,
   TouchableWithoutFeedback,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import StoreContext from '../contexts/StoreContext';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -80,8 +81,10 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
   const [cardHeight] = useState(new Animated.Value(460));
   const [titleTop] = useState(new Animated.Value(20));
   const [opacity] = useState(new Animated.Value(0));
+  const { setCardOpen } = useContext(StoreContext);
 
   const openCard = () => {
+    setCardOpen(true);
     if (!canOpen) return;
     Animated.spring(cardWidth, {
       toValue: screenWidth,
@@ -100,6 +103,7 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
   };
 
   const closeCard = () => {
+    setCardOpen(false);
     Animated.spring(cardWidth, {
       toValue: 315,
       useNativeDriver: false,
