@@ -19,6 +19,7 @@ import Course from '../components/Course';
 import Menu from '../components/Menu';
 import StoreContext from '../contexts/StoreContext';
 import Avatar from '../components/Avatar';
+import ModalLogin from '../components/ModalLogin';
 
 const CardsQuery = gql`
   {
@@ -300,6 +301,7 @@ const HomeScreen = ({ navigation }) => {
           </ScrollView>
         </SafeAreaView>
       </AnimatedContainer>
+      <ModalLogin />
     </RootView>
   );
 };
