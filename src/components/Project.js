@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 import StoreContext from '../contexts/StoreContext';
 
 const screenWidth = Dimensions.get('window').width;
@@ -78,6 +79,8 @@ const CloseView = styled.View`
 
 const AnimatedCloseView = Animated.createAnimatedComponent(CloseView);
 
+const AnimatedLinear = Animated.createAnimatedComponent(LinearGradient);
+
 const Project = ({ image, title, author, text, canOpen = false }) => {
   const [cardWidth] = useState(new Animated.Value(315));
   const [cardHeight] = useState(new Animated.Value(460));
@@ -146,6 +149,15 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
           <Author>by {author}</Author>
         </Cover>
         <AnimatedText style={{ height: textHeight }}>{text}</AnimatedText>
+        <AnimatedLinear
+          colors={['rgba(255,255,255,0)', 'rgba(255,255,255,1)']}
+          style={{
+            position: 'absolute',
+            top: 330,
+            width: '100%',
+            height: textHeight,
+          }}
+        />
         <TouchableOpacity
           style={{
             position: 'absolute',
