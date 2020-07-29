@@ -65,6 +65,8 @@ const Text = styled.Text`
   color: #3c4560;
 `;
 
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
 const CloseView = styled.View`
   width: 32px;
   height: 32px;
@@ -81,6 +83,8 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
   const [cardHeight] = useState(new Animated.Value(460));
   const [titleTop] = useState(new Animated.Value(20));
   const [opacity] = useState(new Animated.Value(0));
+  const [textHeight] = useState(new Animated.Value(100));
+
   const { setCardOpen } = useContext(StoreContext);
 
   const openCard = () => {
@@ -99,6 +103,10 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
       useNativeDriver: false,
     }).start();
     Animated.timing(opacity, { toValue: 1, useNativeDriver: true }).start();
+    Animated.spring(textHeight, {
+      toValue: 1000,
+      useNativeDriver: false,
+    }).start();
     StatusBar.setHidden(true);
   };
 
@@ -117,6 +125,10 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
       useNativeDriver: false,
     }).start();
     Animated.timing(opacity, { toValue: 0, useNativeDriver: true }).start();
+    Animated.spring(textHeight, {
+      toValue: 100,
+      useNativeDriver: false,
+    }).start();
     StatusBar.setHidden(false);
   };
 
@@ -133,7 +145,7 @@ const Project = ({ image, title, author, text, canOpen = false }) => {
           <AnimatedTitle style={{ top: titleTop }}>{title}</AnimatedTitle>
           <Author>by {author}</Author>
         </Cover>
-        <Text>{text}</Text>
+        <AnimatedText style={{ height: textHeight }}>{text}</AnimatedText>
         <TouchableOpacity
           style={{
             position: 'absolute',
