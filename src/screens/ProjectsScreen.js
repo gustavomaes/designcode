@@ -126,6 +126,7 @@ const ProjectsScreen = () => {
         {...panResponder.panHandlers}
       >
         <Project
+          canOpen
           title={projects[index].title}
           image={projects[index].image}
           author={projects[index].author}

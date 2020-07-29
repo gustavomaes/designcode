@@ -75,13 +75,14 @@ const CloseView = styled.View`
 
 const AnimatedCloseView = Animated.createAnimatedComponent(CloseView);
 
-const Project = ({ image, title, author, text }) => {
+const Project = ({ image, title, author, text, canOpen = false }) => {
   const [cardWidth] = useState(new Animated.Value(315));
   const [cardHeight] = useState(new Animated.Value(460));
   const [titleTop] = useState(new Animated.Value(20));
   const [opacity] = useState(new Animated.Value(0));
 
   const openCard = () => {
+    if (!canOpen) return;
     Animated.spring(cardWidth, {
       toValue: screenWidth,
       useNativeDriver: false,
