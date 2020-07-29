@@ -51,7 +51,12 @@ const ProjectsScreen = () => {
   };
 
   const panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: () => true,
+    onMoveShouldSetPanResponder: (event, gestureState) => {
+      if (gestureState.dx === 0 && gestureState.dy === 0) {
+        return false;
+      }
+      return true;
+    },
 
     onPanResponderGrant: () => {
       Animated.spring(scale, {
