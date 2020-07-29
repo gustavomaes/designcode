@@ -12,6 +12,18 @@ const Container = styled.View`
   background: #f0f3f5;
 `;
 
+const Mask = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: -3;
+`;
+
+const AnimatedMask = Animated.createAnimatedComponent(Mask);
+
 const projects = [
   {
     title: 'Price Tag',
@@ -42,6 +54,7 @@ const ProjectsScreen = () => {
   const [thirdScale] = useState(new Animated.Value(0.8));
   const [thirdTranslateY] = useState(new Animated.Value(-50));
   const [index, setIndex] = useState(0);
+  const [opacity] = useState(new Animated.Value(0));
   const { cardOpen } = useContext(StoreContext);
 
   const getNextIndex = (value) => {
@@ -78,12 +91,18 @@ const ProjectsScreen = () => {
         toValue: 44,
         useNativeDriver: true,
       }).start();
+
+      // Opacity
+      Animated.timing(opacity, { toValue: 1, useNativeDriver: true }).start();
     },
 
     onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
 
     onPanResponderRelease: () => {
       const positionY = pan.y.__getValue();
+
+      // Opacity
+      Animated.timing(opacity, { toValue: 0, useNativeDriver: true }).start();
 
       if (positionY > 200) {
         Animated.timing(pan, {
@@ -125,6 +144,7 @@ const ProjectsScreen = () => {
 
   return (
     <Container>
+      <AnimatedMask style={{ opacity }} />
       <Animated.View
         style={{
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
