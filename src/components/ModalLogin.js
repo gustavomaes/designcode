@@ -1,14 +1,20 @@
 /* eslint-disable comma-dangle */
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Success from './Success';
 import Loading from './Loading';
+import StoreContext from '../contexts/StoreContext';
+
+const screenHeight = Dimensions.get('window').height;
 
 const Container = styled.View`
   position: absolute;
@@ -21,6 +27,8 @@ const Container = styled.View`
   align-items: center;
 `;
 
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
+
 const Modal = styled.View`
   width: 335px;
   height: 370px;
@@ -29,6 +37,8 @@ const Modal = styled.View`
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   align-items: center;
 `;
+
+const AnimatedModal = Animated.createAnimatedComponent(Modal);
 
 const Logo = styled.Image`
   width: 44px;
@@ -92,8 +102,12 @@ const IconPassword = styled.Image`
 `;
 
 const ModalLogin = () => {
+  const { loginOpen, setLoginOpen } = useContext(StoreContext);
   const [isSuccessful, setIsSuccessfull] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [top] = useState(new Animated.Value(screenHeight));
+  const [scale] = useState(new Animated.Value(1.3));
+  const [translateY] = useState(new Animated.Value(0));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [iconEmail, setIconEmail] = useState(
@@ -103,11 +117,32 @@ const ModalLogin = () => {
     require('../../assets/icon-password.png')
   );
 
+  useEffect(() => {
+    if (loginOpen) {
+      Animated.timing(top, { toValue: 0, duration: 0 }).start();
+      Animated.spring(scale, { toValue: 1 }).start();
+      Animated.timing(translateY, { toValue: 0, duration: 0 }).start();
+    }
+    if (!loginOpen) {
+      setTimeout(() => {
+        Animated.timing(top, { toValue: screenHeight, duration: 0 }).start();
+        Animated.spring(scale, { toValue: 1.3 }).start();
+      }, 500);
+      Animated.timing(translateY, { toValue: 1000, duration: 500 }).start();
+    }
+  }, [loginOpen]);
+
   const handleLogin = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
       setIsSuccessfull(true);
+      Alert.alert('Congrats', "You've logged successfuly!");
+
+      setTimeout(() => {
+        setLoginOpen(false);
+        setIsSuccessfull(false);
+      }, 1000);
     }, 2000);
   };
 
@@ -121,10 +156,11 @@ const ModalLogin = () => {
 
   const tapBackground = () => {
     Keyboard.dismiss();
+    setLoginOpen(false);
   };
 
   return (
-    <Container>
+    <AnimatedContainer style={{ top }}>
       <TouchableWithoutFeedback onPress={() => tapBackground()}>
         <BlurView
           blurType="light"
@@ -136,7 +172,7 @@ const ModalLogin = () => {
           }}
         />
       </TouchableWithoutFeedback>
-      <Modal>
+      <AnimatedModal style={{ transform: [{ scale }, { translateY }] }}>
         <Logo source={require('../../assets/logo-dc.png')} />
         <Text>Start learning. Access Pro Content.</Text>
         <TextInput
@@ -158,10 +194,10 @@ const ModalLogin = () => {
             <ButtonText>log In</ButtonText>
           </Button>
         </TouchableOpacity>
-      </Modal>
+      </AnimatedModal>
       <Success isActive={isSuccessful} />
       <Loading isActive={isLoading} />
-    </Container>
+    </AnimatedContainer>
   );
 };
 
