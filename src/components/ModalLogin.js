@@ -7,6 +7,8 @@ import {
   Keyboard,
 } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
+import Success from './Success';
+import Loading from './Loading';
 
 const Container = styled.View`
   position: absolute;
@@ -90,6 +92,8 @@ const IconPassword = styled.Image`
 `;
 
 const ModalLogin = () => {
+  const [isSuccessful, setIsSuccessfull] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [iconEmail, setIconEmail] = useState(
@@ -100,7 +104,11 @@ const ModalLogin = () => {
   );
 
   const handleLogin = () => {
-    console.log(email, password);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccessfull(true);
+    }, 2000);
   };
 
   const focusEmail = () => {
@@ -151,6 +159,8 @@ const ModalLogin = () => {
           </Button>
         </TouchableOpacity>
       </Modal>
+      <Success isActive={isSuccessful} />
+      <Loading isActive={isLoading} />
     </Container>
   );
 };
