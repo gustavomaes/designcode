@@ -7,6 +7,7 @@ export const StoreProvider = ({ children }) => {
   const [name, setName] = useState();
   const [cardOpen, setCardOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   return (
     <StoreContext.Provider
@@ -19,6 +20,8 @@ export const StoreProvider = ({ children }) => {
         setCardOpen,
         loginOpen,
         setLoginOpen,
+        isLogged,
+        setIsLogged,
       }}
     >
       {children}

@@ -102,7 +102,7 @@ const IconPassword = styled.Image`
 `;
 
 const ModalLogin = () => {
-  const { loginOpen, setLoginOpen } = useContext(StoreContext);
+  const { loginOpen, setLoginOpen, setIsLogged } = useContext(StoreContext);
   const [isSuccessful, setIsSuccessfull] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [top] = useState(new Animated.Value(screenHeight));
@@ -141,6 +141,7 @@ const ModalLogin = () => {
 
       setTimeout(() => {
         setLoginOpen(false);
+        setIsLogged(true);
         setIsSuccessfull(false);
       }, 1000);
     }, 2000);

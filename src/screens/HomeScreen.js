@@ -176,7 +176,7 @@ const courses = [
 const HomeScreen = ({ navigation }) => {
   const [scale] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
-  const { action, setAction, name, loginOpen, setLoginOpen } = useContext(
+  const { action, setAction, name, setLoginOpen, isLogged } = useContext(
     StoreContext
   );
   const { loading, error, data } = useQuery(CardsQuery);
@@ -237,8 +237,14 @@ const HomeScreen = ({ navigation }) => {
                   top: 0,
                   left: 20,
                 }}
-                onPress={() => setLoginOpen(true)}
-                // setAction('openMenu')
+                onPress={() => {
+                  console.log('isLogged> ', isLogged);
+                  if (isLogged) {
+                    setAction('openMenu');
+                  } else {
+                    setLoginOpen(true);
+                  }
+                }}
               >
                 <Avatar />
               </TouchableOpacity>
