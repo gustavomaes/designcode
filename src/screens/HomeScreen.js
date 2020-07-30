@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable operator-linebreak */
 import React, { useEffect, useContext, useState } from 'react';
@@ -175,7 +176,9 @@ const courses = [
 const HomeScreen = ({ navigation }) => {
   const [scale] = useState(new Animated.Value(1));
   const [opacity] = useState(new Animated.Value(1));
-  const { action, setAction, name } = useContext(StoreContext);
+  const { action, setAction, name, loginOpen, setLoginOpen } = useContext(
+    StoreContext
+  );
   const { loading, error, data } = useQuery(CardsQuery);
 
   const toggleMenu = () => {
@@ -234,7 +237,8 @@ const HomeScreen = ({ navigation }) => {
                   top: 0,
                   left: 20,
                 }}
-                onPress={() => setAction('openMenu')}
+                onPress={() => setLoginOpen(true)}
+                // setAction('openMenu')
               >
                 <Avatar />
               </TouchableOpacity>
